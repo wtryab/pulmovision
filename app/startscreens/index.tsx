@@ -1,5 +1,3 @@
-import { Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
-import { useFonts } from '@expo-google-fonts/poppins/useFonts';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -14,14 +12,8 @@ const goToOnboarding = ()=>{
 }
 
 const {width,height} =Dimensions.get("window")
-const fontload = ()=>{
-    let [fontsLoaded] = useFonts({
-        Poppins_400Regular,
-        Poppins_700Bold,
-      });
-}
+
 const Index = ()=> {
-  fontload();
   return (
     <View  style={styles.container}>
        <LinearGradient
@@ -44,6 +36,7 @@ const Index = ()=> {
 }
 export default Index;
 
+
 const styles = StyleSheet.create({
   
  container: {
@@ -62,7 +55,7 @@ const styles = StyleSheet.create({
   },
   commonstyles: {
     color: "white",
-    fontFamily: "Poppins_400Regular"
+    fontFamily: "Poppins_Regular"
   },
   heading: {
     fontWeight: "bold",
