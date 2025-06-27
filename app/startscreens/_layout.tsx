@@ -33,5 +33,9 @@ export default function RootLayout() {
       name="login"
       options={{ headerShown: false }}
     />
+    <Stack.Screen
+      name="workerlogin"
+      options={{ headerShown: false }}
+    />
   </Stack>;
 }

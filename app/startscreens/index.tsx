@@ -3,12 +3,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import logo from '../../assets/images/Logo.png';
+import logo from '../../assets/images/Logoblue.png';
 
 const goToOnboarding = ()=>{  
-//  router.replace('/onboarding'); 
-  // <-- Navigate here
-  router.push('/startscreens/onboarding') 
+  router.replace('/startscreens/onboarding') 
 }
 
 const {width,height} =Dimensions.get("window")
@@ -18,18 +16,17 @@ const Index = ()=> {
     <View  style={styles.container}>
        <LinearGradient
         // Background Linear Gradient
-        colors={['#52E5E7', "#1976D2",'#130CB7']}
+        colors={['#52E5E7', "#1a78d2",'#130CB7']}
         style={styles.background}
         start={[0,0]}
         end={[1,1]}
       />
       <Image source={logo}/>
-  
       <Text style={[styles.heading, styles.commonstyles]}>PulmoVision</Text>
       <Text style={[styles.description, styles.commonstyles]}>Vision for Healthier Lungs</Text>
       
       <TouchableOpacity style={styles.button} onPress={goToOnboarding}>
-        <Ionicons name='arrow-forward' size={40} color={"#1976D2"}></Ionicons>
+        <Ionicons name='arrow-forward' size={40} color={"#1a78d2"}></Ionicons>
         </TouchableOpacity>
       </View>
   );
