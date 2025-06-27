@@ -19,7 +19,7 @@ function gotopage(num:number) {
   
 }
 
-const signinlogin = () => {
+const SignInLogin = () => {
   return (
     <View style={styles.container}>
         <Image source={logo} />
@@ -34,14 +34,14 @@ const signinlogin = () => {
           <Text style={[{color: "#1a78d2"},styles.buttontext]}>Sign Up</Text>
           </TouchableOpacity>
         <TouchableOpacity onPress={()=>gotopage(3)}>
-          <Text style={{color:"blue", textAlign:"center"}}>Worker Login</Text>
+          <Text style={styles.worker}>Worker Login</Text>
           </TouchableOpacity>
         </View>
     </View>
   )
 }
 
-export default signinlogin
+export default SignInLogin
 
 const styles = StyleSheet.create({
    container: {
@@ -87,6 +87,8 @@ borderColor:"#1a78d2",
 borderWidth:1.5,
 
 },
+worker:{fontFamily:"Poppins_Regular",color:"blue", textAlign:"center"},
+
 loginbutton:{
 
     backgroundColor: "#1a78d2",

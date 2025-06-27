@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet, Text, TextInput, View } from 'react-native';
 
 const {width,height} =Dimensions.get("window")
 
-const signup = () => {
+const SignUp = () => {
   return (
     <View style={styles.container}>
       <Ionicons name='chevron-back-outline'>
@@ -25,7 +25,7 @@ const signup = () => {
   )
 }
 
-export default signup
+export default SignUp
 
 const styles = StyleSheet.create({
  container: {

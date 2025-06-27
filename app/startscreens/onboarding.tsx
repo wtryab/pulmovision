@@ -13,7 +13,7 @@ const text= ["Empowering diagnosis with the precision of AI",
   "Interpretable insights for detection of Tuberculosis and Pneumonia"
 ]
 
-const onboarding = () => {
+const Onboarding = () => {
 const [currentImage, setCurrentImage] = useState(image1);
 const [currentText,setCurrentText] = useState(text[0]);
 
@@ -55,7 +55,7 @@ const handleChangeImage =() => {
   )
 }
 
-export default onboarding;
+export default Onboarding;
 
 const styles = StyleSheet.create({
   buttoncontainer:{

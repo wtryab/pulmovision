@@ -22,7 +22,7 @@ const Index = ()=> {
         end={[1,1]}
       />
       <Image source={logo}/>
-      <Text style={[styles.heading, styles.commonstyles]}>PulmoVision</Text>
+      <Text style={[styles.commonstyles,styles.heading]}>PulmoVision</Text>
       <Text style={[styles.description, styles.commonstyles]}>Vision for Healthier Lungs</Text>
       
       <TouchableOpacity style={styles.button} onPress={goToOnboarding}>
@@ -54,12 +54,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "Poppins_Regular"
   },
-  heading: {
-    fontWeight: "bold",
+  heading: { 
+    fontFamily: "Poppins_Bold",
     fontSize:  width * 0.1,
     marginTop: 5
   }, 
   description: {
+    marginTop:-10,
     textAlign:"center",
     fontSize: width*0.05
   }, 

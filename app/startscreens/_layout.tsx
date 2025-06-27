@@ -1,7 +1,5 @@
-import { Stack } from "expo-router";
-
-
 import { Poppins_400Regular, Poppins_700Bold, useFonts } from '@expo-google-fonts/poppins';
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
    const [fontsLoaded, fontError] = useFonts({
