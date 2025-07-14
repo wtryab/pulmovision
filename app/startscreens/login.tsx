@@ -1,48 +1,52 @@
-import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router'; // Make sure expo-router is installed and configured
+import MyLoader from '@/components/loader';
+import { useUser } from '@/hooks/useUser';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, Dimensions, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'; // Removed Platform
+import { Alert, Dimensions, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get("window");
 
 const LoginScreenAlignedInputs = () => {
+	const [loading, setLoading]=useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [cnic, setCnic] = useState('');
-
-  // Handler for Forgot Password link
+  const [email, setEmail] = useState('');
+  const {user,login}= useUser();
+  
   const handleForgotPassword = () => {
     console.log('Forgot Password pressed');
-    // router.push('/forgot-password'); // Example navigation
   };
-
-  // Handler for Sign Up link
+  
   const handleSignUp = () => {
-    router.push('/startscreens/signup'); // Example navigation
+    router.push('/startscreens/signup');
   };
+  
+  const handleLogin = async() => {
+		if(!email||!password){
+			Alert.alert("Error", "Enter Email and Password")
+			return
+		}
 
-  // Handler for Login button
-  const handleLogin = () => {
-      console.log('Login Pressed');
-      // Implement your login logic here
-      if (cnic && password) {
-        Alert.alert('Login Attempt', `CNIC: ${cnic}\nPassword: ${password}`);
-        // Typically, you'd send this to an authentication API
-        // Then navigate to the main app if successful
-      } else {
-        Alert.alert('Error', 'Please enter both CNIC and Password.');
-      }
+		setLoading(true)
+		const response = await login(email, password)
+		setLoading(false)
+		if (response){	
+			router.replace("/patient/dash")
+		} 
+		else {
+			Alert.alert("Error", "Incorrect Email or Password")
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         style={styles.keyboardAvoidingView}
-        behavior={'height'} // Set behavior explicitly for Android
-        keyboardVerticalOffset={0} // Set offset explicitly for Android
+        behavior={'height'}
+        keyboardVerticalOffset={0}
       >
-        {/* Header Section */}
         <View style={styles.header}>
           <TouchableOpacity onPressIn={router.back}>
             <Ionicons name='chevron-back-outline' size={width * 0.08} color="#333" />
@@ -51,26 +55,24 @@ const LoginScreenAlignedInputs = () => {
           <View style={{ width: width * 0.08 }} />
         </View>
 
-        {/* Main Content Area */}
         <View style={styles.contentArea}>
-          {/* Input Fields Section */}
           <View style={styles.inputSection}>
-            {/* CNIC Input Field */}
-            <View style={styles.fieldview}>
-              <AntDesign name="idcard" size={width * 0.06} color="gray" style={styles.inputIcon} />
+            <View style={styles.fieldView}>
+              <Ionicons name="mail-outline" size={width * 0.06} color="gray" style={styles.inputIcon}/>
               <TextInput
                 style={styles.input}
-                maxLength={13}
-                placeholder='Enter CNIC without - (dash)'
                 placeholderTextColor="gray"
-                keyboardType='numeric'
-                value={cnic}
-                onChangeText={setCnic}
+                onChangeText={setEmail}
+                placeholder="Enter your email"
+                value={email}
+                keyboardType="email-address" // Crucial for email inputs
+                autoCapitalize="none"        // Prevents auto-capitalization of the first letter
+                autoCorrect={false}          // Prevents autocorrection which can be annoying for emails
+                autoComplete="email" 
               />
             </View>
 
-            {/* Password Input Field */}
-            <View style={styles.fieldview}>
+            <View style={styles.fieldView}>
               <FontAwesome name='lock' size={width * 0.06} color={"gray"} style={styles.inputIcon} />
               <TextInput
                 style={styles.input}
@@ -92,19 +94,16 @@ const LoginScreenAlignedInputs = () => {
               </TouchableOpacity>
             </View>
 
-            {/* Forgot Password? Link */}
             <TouchableOpacity onPressIn={handleForgotPassword} style={styles.forgotPasswordContainer}>
               <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
             </TouchableOpacity>
 
           </View>
 
-          {/* Login Button */}
           <TouchableOpacity style={styles.loginButton} onPressIn={handleLogin}>
-            <Text style={styles.loginButtonText}>Login</Text>
+            {loading?<MyLoader/>:<Text style={styles.loginButtonText}>Login</Text>}
           </TouchableOpacity>
 
-          {/* Don't Have an Account? Sign Up. */}
           <View style={styles.signUpContainer}>
             <Text style={styles.signUpText}>Don't Have an Account? </Text>
             <TouchableOpacity onPressIn={handleSignUp}>
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     paddingHorizontal: width * 0.05,
-    paddingTop: height * 0.02, // Explicitly for Android
+    paddingTop: height * 0.02,
     paddingBottom: height * 0.02,
     backgroundColor: '#fff',
     zIndex: 1,
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: height * 0.02,
   },
-  fieldview: {
+  fieldView: {
     flexDirection: 'row',
     alignItems: "center",
     backgroundColor: "#f5f5f5",
@@ -221,6 +220,6 @@ const styles = StyleSheet.create({
   signUpLink: {
     fontSize: width * 0.04,
     color: '#1a78d2',
-     fontFamily: 'Poppins_Bold',
+    fontFamily: 'Poppins_Bold',
   },
 });

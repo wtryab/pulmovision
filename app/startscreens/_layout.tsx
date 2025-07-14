@@ -10,7 +10,8 @@ export default function RootLayout() {
   });
   
   //hides ugly header//
-  return <Stack >
+  return (
+  <Stack >
     <Stack.Screen
       name="index"
       options={{ headerShown: false }}
@@ -35,5 +36,5 @@ export default function RootLayout() {
       name="workerlogin"
       options={{ headerShown: false }}
     />
-  </Stack>;
+  </Stack>);
 }

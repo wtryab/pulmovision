@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 
 
 
+import { UserProvider } from "@/contexts/UserContext";
 import { Poppins_400Regular, Poppins_700Bold, useFonts } from '@expo-google-fonts/poppins';
 
 export default function RootLayout() {
@@ -12,10 +13,14 @@ export default function RootLayout() {
     // You can use different names here if you prefer, but keep them consistent
   })
 
-  return <Stack >
+  return (
+  <UserProvider>
+  <Stack >
     <Stack.Screen
       name="startscreens"
       options={{ headerShown: false }}
     />
-  </Stack>;
+  </Stack>
+  </UserProvider>
+  );
 }
