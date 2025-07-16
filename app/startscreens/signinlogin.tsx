@@ -12,6 +12,10 @@ function goToPage(num: number) {
     router.navigate("/startscreens/signup");
   } else if (num === 3) {
     router.navigate("/startscreens/workerlogin");
+  }else if (num === 4) {
+    router.navigate("/startscreens/healthWorkerDashboard");
+  }else if (num === 5) {
+    router.navigate("/startscreens/patientDashboard");
   }
 }
 
@@ -33,6 +37,12 @@ const SignInLogin = () => {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => goToPage(3)}>
           <Text style={styles.worker}>Worker Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => goToPage(4)}>
+          <Text style={styles.worker}>Health Woker screen</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => goToPage(5)}>
+          <Text style={styles.worker}>Patient schreen case</Text>
         </TouchableOpacity>
       </View>
     </View>

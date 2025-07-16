@@ -1,10 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-
 
 const { width, height } = Dimensions.get('window');
 
@@ -12,10 +10,13 @@ const NewCaseScreen = () => {
   const [patientId, setPatientId] = useState('');
   const [patientHistory, setPatientHistory] = useState('');
 
+  // Calculate an approximate height for the footer
+  // You might need to fine-tune this value based on actual footer height + desired spacing
+  const FOOTER_HEIGHT = height * 0.07 + 30; // Roughly paddingVertical * 2 + icon size + marginBottom
+
   return (
     <SafeAreaView style={styles.container}>
-
-      {/* Header */}
+      {/* Header - Stays outside the ScrollView */}
       <View style={styles.header}>
         <Text style={styles.title}>Kindly provide{'\n'}necessary details{'\n'}below</Text>
         <Image
@@ -24,62 +25,76 @@ const NewCaseScreen = () => {
         />
       </View>
 
-      {/* Patient ID Input */}
-      <View style={styles.inputContainer}>
-        <Ionicons name="md-medical-outline" size={width * 0.05} color="gray" style={styles.inputIcon} />
-        <TextInput
-          placeholder="Enter Patient ID"
-          placeholderTextColor="gray"
-          value={patientId}
-          onChangeText={setPatientId}
-          style={styles.textInput}
-        />
-      </View>
-
-      {/* Patient History */}
-      <Text style={styles.sectionTitle}>Patient History</Text>
-      <TextInput
-        placeholder="Enter text here"
-        placeholderTextColor="gray"
-        value={patientHistory}
-        onChangeText={text => setPatientHistory(text)}
-        multiline
-        style={styles.textArea}
-        maxLength={100}
-/>
-<Text style={styles.descriptionHint}>
-  Please enter a guide description   {patientHistory.length}/100
-</Text>
-
-
-      {/* Upload Image */}
-      <TouchableOpacity style={styles.uploadContainer}>
-        <Ionicons name="image-outline" size={width * 0.1} color="#ccc" />
-        <Text style={styles.uploadText}>Upload Image</Text>
-      </TouchableOpacity>
-
-      {/* Submit Button */}
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={() => router.push('/startscreens/submitconfirmation')}  // Adjust path as needed
+      {/* KeyboardAvoidingView wrapping ScrollView */}
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoidingContainer}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -FOOTER_HEIGHT} // Adjust offset if needed for Android
       >
-        <Text style={styles.submitButtonText}>Submit Case</Text>
-      </TouchableOpacity>
+        <ScrollView
+          contentContainerStyle={[styles.scrollViewContent, { paddingBottom: FOOTER_HEIGHT }]} // Dynamic padding based on footer height
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* Patient ID Input */}
+          <View style={styles.inputContainer}>
+            <Ionicons name="md-medical-outline" size={width * 0.05} color="gray" style={styles.inputIcon} />
+            <TextInput
+              placeholder="Enter Patient ID"
+              placeholderTextColor="gray"
+              value={patientId}
+              onChangeText={setPatientId}
+              style={styles.textInput}
+            />
+          </View>
 
-      {/* Footer Navigation */}
+          {/* Patient History */}
+          <Text style={styles.sectionTitle}>Patient History</Text>
+          <TextInput
+            placeholder="Enter text here"
+            placeholderTextColor="gray"
+            value={patientHistory}
+            onChangeText={text => setPatientHistory(text)}
+            multiline
+            style={styles.textArea}
+            maxLength={100}
+          />
+          <Text style={styles.descriptionHint}>
+            Please enter a guide description   {patientHistory.length}/100
+          </Text>
+
+          {/* Upload Image */}
+          <TouchableOpacity style={styles.uploadContainer}>
+            <Ionicons name="image-outline" size={width * 0.1} color="#ccc" />
+            <Text style={styles.uploadText}>Upload Image</Text>
+          </TouchableOpacity>
+
+          {/* Submit Button */}
+          <TouchableOpacity
+            style={styles.submitButton}
+            //onPress={() => router.push('/startscreens/submitconfirmation')}  // Adjust path as needed
+          >
+            <Text style={styles.submitButtonText}>Submit Case</Text>
+          </TouchableOpacity>
+
+          {/* Removed the extra View with fixed height, replaced by paddingBottom */}
+        </ScrollView>
+      </KeyboardAvoidingView>
+
+      {/* Footer Navigation - Absolutely positioned at the bottom */}
       <View style={styles.footerNav}>
-  <TouchableOpacity onPress={() => router.push('/startscreens/home')}>
-    <Ionicons name="home-outline" size={width * 0.07} color="#999" />
-  </TouchableOpacity>
+        <TouchableOpacity /*onPress={() => router.push('/startscreens/home')}*/>
+          <Ionicons name="home-outline" size={width * 0.07} color="#999" />
+        </TouchableOpacity>
 
-  <TouchableOpacity onPress={() => router.push('/startscreens/notifications')}>
-    <Ionicons name="notifications-outline" size={width * 0.07} color="#999" />
-  </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push('/startscreens/notifications')}>
+          <Ionicons name="notifications-outline" size={width * 0.07} color="#999" />
+        </TouchableOpacity>
 
-  <TouchableOpacity onPress={() => router.push('/startscreens/profile')}>
-    <Ionicons name="person-outline" size={width * 0.07} color="#999" />
-  </TouchableOpacity>
-</View>
+        <TouchableOpacity /*onPress={() => router.push('/startscreens/profile')}*/>
+          <Ionicons name="person-outline" size={width * 0.07} color="#999" />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -91,12 +106,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  keyboardAvoidingContainer: {
+    flex: 1, // Still crucial for KeyboardAvoidingView to take up available space
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: width * 0.04,
-    // marginTop: height * 0.01,
   },
   profileImage: {
     width: width * 0.14,
@@ -111,6 +128,12 @@ const styles = StyleSheet.create({
     marginTop: height * 0.02,
     marginHorizontal: width * 0.05,
   },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingHorizontal: width * 0.05,
+    paddingTop: height * 0.03,
+    // paddingBottom will be set dynamically in the component
+  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -118,7 +141,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: width * 0.04,
     marginTop: height * 0.02,
-    marginHorizontal: width * 0.05,
   },
   inputIcon: {
     marginRight: width * 0.03,
@@ -136,13 +158,10 @@ const styles = StyleSheet.create({
     color: '#333',
     marginTop: height * 0.03,
     marginBottom: height * 0.03,
-    marginHorizontal: width * 0.05,
-    paddingHorizontal: width * 0.04,
   },
   textArea: {
     backgroundColor: '#f5f5f5',
     borderRadius: 15,
-    marginHorizontal: width * 0.05,
     paddingHorizontal: width * 0.04,
     paddingVertical: height * 0.02,
     minHeight: height * 0.17,
@@ -151,9 +170,7 @@ const styles = StyleSheet.create({
   descriptionHint: {
     fontSize: width * 0.035,
     color: '#999',
-    marginHorizontal: width * 0.05,
     marginTop: height * 0.02,
-    paddingHorizontal: width * 0.04,
   },
   uploadContainer: {
     backgroundColor: '#f5f5f5',
@@ -162,7 +179,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: height * 0.18,
     marginTop: height * 0.01,
-    marginHorizontal: width * 0.05,
   },
   uploadText: {
     fontSize: width * 0.035,
@@ -176,6 +192,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.3,
     alignSelf: 'center',
     marginTop: height * 0.03,
+    marginBottom: height * 0.02,
   },
   submitButtonText: {
     color: '#fff',
@@ -189,11 +206,12 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.015,
     borderTopWidth: 1,
     borderTopColor: '#eee',
-    position: 'absolute',
-    bottom: 0,
+    // === CRITICAL CHANGES HERE ===
+    position: 'relative', // Re-introduce absolute positioning
+    bottom: 0, // Anchor to the very bottom
     left: 0,
     right: 0,
-    marginBottom: 30,
     backgroundColor: '#fff',
+    // Removed marginBottom as bottom: 0 handles it
   },
 });

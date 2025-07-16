@@ -3,6 +3,7 @@ import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { router } from 'expo-router'; // Added for navigation
+import React from 'react';
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,7 +18,7 @@ const HealthWorkerDashboard = () => {
         </View>
         <TouchableOpacity onPress={() => router.push('../../profile')}>
           <Image
-            source={require('../../assets/placeholders/9.jpeg')}  // Correct local image path
+            source={require('@/assets/placeholders/9.jpeg')}  // Correct local image path
             style={styles.profileImage}
           />
         </TouchableOpacity>
@@ -40,7 +41,7 @@ const HealthWorkerDashboard = () => {
         <View style={styles.submitCaseContent}>
           <Text style={styles.submitCaseTitle}>Submit New{'\n'}Case Report</Text>
           <Image
-            source={require('../../assets/placeholders/Xrayimage.jpeg')}  // Adjust path as per your structure
+            source={require('@/assets/placeholders/Xrayimage.jpeg')}  // Adjust path as per your structure
             style={styles.customImageStyle}  // Define a separate style for this image
             />
         </View>

@@ -1,7 +1,8 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
+import React from 'react';
 import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 const { width } = Dimensions.get('window');
 const PatientDashboard = () => {
@@ -31,7 +32,7 @@ const PatientDashboard = () => {
             <Text style={styles.buttonText}>See Status</Text>
           </TouchableOpacity>
           <Image
-  source={require('../../assets/images/questionMark2.png')} 
+  source={require('@/assets/images/questionMark2.png')} 
   style={{ width: 60, height: 60,borderRadius: 30,
     resizeMode: 'cover', transform: [{ translateY: -25 }, { translateX: -20 }, ]}}
 />
@@ -44,17 +45,17 @@ const PatientDashboard = () => {
       onPress={() => router.push('/startscreens/login')}
 
       >
-        <Icon name="alert-circle-outline" size={20} color="red" />
+        <Ionicons name="alert-circle-outline" size={20} color="red" />
         <Text style={styles.logoutText}>Logout</Text>
-        <Icon name="chevron-forward" size={20} color="gray" />
+        <Ionicons name="chevron-forward" size={20} color="gray" />
       </TouchableOpacity>
 
       {/* Bottom Navigation */}
       <View style={styles.navbar}>
-        <Icon name="home" size={26} color="#2974f0" />
-        <Icon name="notifications-outline" size={26} color="#ccc" />
-        <Icon name="calendar-outline" size={26} color="#ccc" />
-        <Icon name="person-outline" size={26} color="#ccc" />
+        <Ionicons name="home" size={26} color="#2974f0" />
+        <Ionicons name="notifications-outline" size={26} color="#ccc" />
+        <Ionicons name="calendar-outline" size={26} color="#ccc" />
+        <Ionicons name="person-outline" size={26} color="#ccc" />
       </View>
     </SafeAreaView>
   );

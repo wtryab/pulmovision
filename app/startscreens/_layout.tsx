@@ -1,5 +1,6 @@
 import { Poppins_400Regular, Poppins_700Bold, useFonts } from '@expo-google-fonts/poppins';
 import { Stack } from "expo-router";
+import React from 'react';
 
 export default function RootLayout() {
    const [fontsLoaded, fontError] = useFonts({
