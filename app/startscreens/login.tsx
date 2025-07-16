@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
     elevation: 5,
+    height: height * 0.075, 
   },
   loginButtonText: {
     color: '#fff',
