@@ -13,7 +13,7 @@ const LoginScreenAlignedInputs = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
-  const {user,login}= useUser();
+  const {login}= useUser();
   
   const handleForgotPassword = () => {
     console.log('Forgot Password pressed');
@@ -32,12 +32,9 @@ const LoginScreenAlignedInputs = () => {
 		setLoading(true)
 		const response = await login(email, password)
 		setLoading(false)
-		if (response){	
-			router.replace("/patient/dash")
+		if (!response){	
+      Alert.alert("Error", "Incorrect Email or Password")
 		} 
-		else {
-			Alert.alert("Error", "Incorrect Email or Password")
-    }
   };
 
   return (
@@ -199,6 +196,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
     elevation: 5,
+    height: height * 0.075, 
   },
   loginButtonText: {
     color: '#fff',

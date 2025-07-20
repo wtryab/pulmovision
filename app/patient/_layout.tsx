@@ -1,34 +1,23 @@
-import { Stack } from "expo-router";
-
-
-
-import { UserProvider } from "@/contexts/UserContext";
 import { Poppins_400Regular, Poppins_700Bold, useFonts } from '@expo-google-fonts/poppins';
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
    const [fontsLoaded, fontError] = useFonts({
     // Map your font names to the imported font assets
     'Poppins_Regular': Poppins_400Regular, // This is the name you'll use in StyleSheet
     'Poppins_Bold': Poppins_700Bold,     // This is the name you'll use in StyleSheet
-    // You can use different names here if you prefer, but keep them consistent
-  })
-
+});
+  
+  //hides ugly header//
   return (
-  <UserProvider>
   <Stack >
     <Stack.Screen
-      name="startscreens"
+      name="patientDashboard"
       options={{ headerShown: false }}
     />
     <Stack.Screen
-      name="patient"
+      name="seeStatus"
       options={{ headerShown: false }}
     />
-    <Stack.Screen
-      name="healthcareWorker"
-      options={{ headerShown: false }}
-    />
-  </Stack>
-  </UserProvider>
-  );
+  </Stack>);
 }

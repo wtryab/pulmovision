@@ -1,9 +1,9 @@
+import logo from '@/assets/images/Logowhite.png';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import logo from '../../assets/images/Logoblue.png';
 
 const goToOnboarding = () => {
   router.replace('/startscreens/onboarding');
@@ -20,7 +20,7 @@ const Index = () => {
         start={[0, 0]}
         end={[1, 1]}
       />
-      <Image source={logo} />
+      <Image style={styles.image} source={logo} />
       <Text style={[styles.commonStyles, styles.heading]}>PulmoVision</Text>
       <Text style={[styles.description, styles.commonStyles]}>Vision for Healthier Lungs</Text>
 
@@ -40,6 +40,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },  
+  image: {
+    width: width * 0.6,  // 50% of screen width
+    height: width * 0.5, // Maintain aspect ratio
+    resizeMode: 'cover', // Ensures the image scales properly
   },
   background: {
     position: 'absolute',

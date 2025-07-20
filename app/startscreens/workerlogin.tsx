@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const { width, height } = Dimensions.get("window");
 
 const EmployeeLoginScreen = () => { // Renamed component for clarity
-  const [employeeId, setEmployeeId] = useState('');  
+  const [workEmail, setworkEmail] = useState('');  
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
@@ -18,11 +18,9 @@ const EmployeeLoginScreen = () => { // Renamed component for clarity
   // Handler for Login button
   const handleLogin = () => {
     console.log('Login Pressed');
-    // Implement your login logic here
-    if (employeeId && password) {
-      Alert.alert('Login Attempt', `Employee ID: ${employeeId}\nPassword: ${password}`);
-      // Typically, you'd send this to an authentication API
-      // Then navigate to the main app if successful
+
+    if (workEmail && password) {
+      router.replace("/healthcareWorker/workerDashboard")
     } else {
       Alert.alert('Error', 'Please enter both Employee ID and Password.');
     }
@@ -52,11 +50,11 @@ const EmployeeLoginScreen = () => { // Renamed component for clarity
             <View style={styles.fieldview}>
               <Ionicons name="id-card-outline" size={width*0.06} color="gray" style={styles.inputIcon} /><TextInput
                 style={styles.input}
-                placeholder='Enter your employee ID' 
+                placeholder='Enter your Work Email' 
                 placeholderTextColor="gray"
                 keyboardType='default' 
-                value={employeeId} 
-                onChangeText={setEmployeeId} 
+                value={workEmail} 
+                onChangeText={setworkEmail} 
               />
             </View>
 
